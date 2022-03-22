@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link, useMatch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FetchTrendingFilms } from 'helpers/FetchApi';
 import css from './HomePage.module.css';
 const HomePage = () => {
-  // const url = useMatch();
-  // console.log(url);
   const [films, setFilms] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -23,8 +21,8 @@ const HomePage = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     const Films = () => {
-      setLoading(true);
       FetchTrendingFilms(page)
         .then(GetTrendingFilms)
         .catch(error => console.log(error))
@@ -75,38 +73,3 @@ const HomePage = () => {
   );
 };
 export default HomePage;
-
-// BrowserRouter,
-//   HashRouter,
-//   Link,
-//   MemoryRouter,
-//   NavLink,
-//   Navigate,
-//   Outlet,
-//   Route,
-//   Router,
-//   Routes,
-//   UNSAFE_LocationContext,
-//   UNSAFE_NavigationContext,
-//   UNSAFE_RouteContext,
-//   createRoutesFromChildren,
-//   createSearchParams,
-//   generatePath,
-//   matchPath,
-//   matchRoutes,
-//   renderMatches,
-//   resolvePath,
-//   unstable_HistoryRouter,
-//   useHref,
-//   useInRouterContext,
-//   useLinkClickHandler,
-//   useLocation,
-//   useMatch,
-//   useNavigate,
-//   useNavigationType,
-//   useOutlet,
-//   useOutletContext,
-//   useParams,
-//   useResolvedPath,
-//   useRoutes,
-//   useSearchParams;
