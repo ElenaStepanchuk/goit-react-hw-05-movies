@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { CastFilm } from '../helpers/FetchFilms';
 import { useEffect, useState } from 'react';
 import Loader from './Loader';
@@ -20,6 +20,10 @@ const Cast = () => {
   const { movieId } = useParams();
   const [casts, setCasts] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const location = useLocation();
+  console.log(location);
+
   useEffect(() => {
     const CastInfo = async () => {
       setLoading(true);

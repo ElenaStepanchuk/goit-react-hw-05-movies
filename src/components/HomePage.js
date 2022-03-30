@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { TrendingFilms } from '../helpers/FetchFilms';
@@ -56,15 +56,18 @@ const HomePage = () => {
   const [films, setFilms] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const handleChangePage = () => {
-    setLoading(true);
-    setPage(prevPage => prevPage + 1);
-  };
-  const scroll = () => {
+  const location = useLocation();
+  console.log(location);
+  const Scroll = () => {
     window.scrollBy({
       top: 2000,
       behavior: 'smooth',
     });
+  };
+  const handleChangePage = () => {
+    setLoading(true);
+    setPage(prevPage => prevPage + 1);
+    Scroll();
   };
   useEffect(() => {
     const Films = async () => {
@@ -72,7 +75,6 @@ const HomePage = () => {
       try {
         const response = await TrendingFilms(page);
         setFilms(prevFilms => [...prevFilms, ...response.data.results]);
-        scroll();
       } catch (error) {
         console.log(error);
       } finally {
@@ -88,7 +90,12 @@ const HomePage = () => {
         {films &&
           films.map(film => (
             <GalleryItem key={film.id}>
-              <GalleryItemLink to={`/movies/${film.id}`}>
+              <GalleryItemLink
+                to={{
+                  pathname: `/movies/${film.id}`,
+                  state: { from: location },
+                }}
+              >
                 {film.poster_path ? (
                   <GalleryItemImg
                     src={`https://image.tmdb.org/t/p/w300${film.poster_path}`}

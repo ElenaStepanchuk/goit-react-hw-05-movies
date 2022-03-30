@@ -133,7 +133,7 @@ const MoviesPage = () => {
       try {
         const response = await SerchFilms(page, saveQuery);
         // console.log(response.data.results);
-        setFilms(films => [...films, ...response.data.results]);
+        setFilms(prevFilms => [...prevFilms, ...response.data.results]);
       } catch (error) {
         console.log(error);
       } finally {

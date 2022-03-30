@@ -7,7 +7,7 @@ import { FcLeft, FcClapperboard, FcVoicePresentation } from 'react-icons/fc';
 import noPoster from '../images/no-poster.jpg';
 import Loader from './Loader';
 
-const Wrapper = styled.div`
+const WrapperDet = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin: 20px auto;
@@ -16,13 +16,13 @@ const Wrapper = styled.div`
   padding: 20px;
   color: white;
 `;
-const Tittle = styled.h2`
+const TittleDet = styled.h2`
   text-align: center;
   font-weight: 800;
   font-size: 30px;
   text-transform: uppercase;
 `;
-const SecondTittle = styled.h3`
+const SecondTittleDet = styled.h3`
   font-weight: 800;
   font-size: 20px;
   text-transform: uppercase;
@@ -30,17 +30,17 @@ const SecondTittle = styled.h3`
   text-align: center;
   /* margin: 0 auto; */
 `;
-const Span = styled.span`
+const SpanDet = styled.span`
   font-weight: 400;
   font-size: 20px;
   text-transform: none;
 `;
-const Text = styled.p`
+const TextDet = styled.p`
   font-weight: 400;
   font-size: 20px;
   text-transform: none;
 `;
-const LinkA = styled.a`
+const LinkADet = styled.a`
   font-weight: 400;
   font-size: 20px;
   text-decoration: none;
@@ -48,7 +48,7 @@ const LinkA = styled.a`
   margin-bottom: 20px;
   text-transform: none;
 `;
-const BackBtn = styled.button`
+const BackBtnDet = styled.button`
   display: block;
   background: rgb(0, 255, 255);
   box-shadow: -1px -1px 9px 6px rgb(0, 255, 255, 0.5);
@@ -63,9 +63,9 @@ const BackBtn = styled.button`
   text-transform: uppercase;
   text-decoration: none;
 `;
-const LinkBtn = styled(Link)`
-  text-decoration: none;
-`;
+// const LinkBtn = styled(Link)`
+//   text-decoration: none;
+// `;
 const DetailsLink = styled(Link)`
   display: block;
   margin-left: 20px;
@@ -87,11 +87,14 @@ const MovieDetailsPage = () => {
   const { movieId } = useParams();
   const [detail, setDetail] = useState(null);
   const [loading, setLoading] = useState(false);
+
   const location = useLocation();
   console.log(location);
 
+  // const history = useHistory;
+
   useEffect(() => {
-    const Details = async () => {
+    const GetDetails = async () => {
       setLoading(true);
       try {
         const response = await DetailsFilm(movieId);
@@ -103,18 +106,24 @@ const MovieDetailsPage = () => {
         setLoading(false);
       }
     };
-    Details();
+    GetDetails();
   }, [movieId]);
   const handleBackBtn = () => {
-    setDetail(null);
+    // setDetail(null);
+    if (location && location.state && location.state.from) {
+      // history.push(location.state.from);
+      return;
+    } // history.push('/');
+
+    //history.push(location?.state?.from ?? '/');
   };
   return (
-    <Wrapper>
+    <WrapperDet>
       {loading && <Loader />}
-      {detail && <Tittle>{detail.original_title || detail.name}</Tittle>}
-      <SecondTittle>
-        Release date:&nbsp;{detail && <Span>{detail.release_date}</Span>}
-      </SecondTittle>
+      {detail && <TittleDet>{detail.original_title || detail.name}</TittleDet>}
+      <SecondTittleDet>
+        Release date:&nbsp;{detail && <SpanDet>{detail.release_date}</SpanDet>}
+      </SecondTittleDet>
       {detail && detail.poster_path ? (
         <img
           src={`https://image.tmdb.org/t/p/w300${detail.poster_path}`}
@@ -123,35 +132,45 @@ const MovieDetailsPage = () => {
       ) : (
         <img src={noPoster} alt={'Poster not available'} width="300px" />
       )}
-      <SecondTittle>
+      <SecondTittleDet>
         Genres:&nbsp;
         {detail &&
           detail.genres.map(genre => {
             const id = nanoid();
-            return <Span key={id}>&nbsp;{genre.name}</Span>;
+            return <SpanDet key={id}>&nbsp;{genre.name}</SpanDet>;
           })}
-      </SecondTittle>
-      <SecondTittle>Descriptions: </SecondTittle>
-      {detail && <Text>{detail.overview}</Text>}
-      <SecondTittle>
+      </SecondTittleDet>
+      <SecondTittleDet>Descriptions: </SecondTittleDet>
+      {detail && <TextDet>{detail.overview}</TextDet>}
+      <SecondTittleDet>
         Homepage:
-        {detail && <LinkA href={`${detail.homepage}`}> Link to homepage</LinkA>}
-      </SecondTittle>
-      <LinkBtn to={`/${location}`}>
-        <BackBtn type="button" onChange={handleBackBtn}>
-          <FcLeft /> Go back
-        </BackBtn>
-      </LinkBtn>
-      <DetailsLink to={`/movies/${movieId}/cast`}>
+        {detail && (
+          <LinkADet href={`${detail.homepage}`}> Link to homepage</LinkADet>
+        )}
+      </SecondTittleDet>
+      <BackBtnDet type="button" onClick={handleBackBtn}>
+        <FcLeft /> Go back
+      </BackBtnDet>
+      <DetailsLink
+        to={{
+          pathname: `/movies/${movieId}/cast`,
+          state: 5,
+        }}
+      >
         <FcClapperboard />
         Cast
       </DetailsLink>
-      <DetailsLink to={`/movies/${movieId}/reviews`}>
+      <DetailsLink
+        to={{
+          pathname: `/movies/${movieId}/reviews`,
+          state: { from: location },
+        }}
+      >
         <FcVoicePresentation />
         Reviews
       </DetailsLink>
       <Outlet />
-    </Wrapper>
+    </WrapperDet>
   );
 };
 export default MovieDetailsPage;
