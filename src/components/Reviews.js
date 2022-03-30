@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { ReviewsFilm } from '../helpers/FetchFilms';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import Loader from './Loader';
 const Reviews = () => {
   const { movieId } = useParams();
   const [reviews, setReviews] = useState([]);
@@ -42,7 +43,7 @@ const Reviews = () => {
   }, [movieId]);
   return (
     <div>
-      {loading && <h1>Loading...</h1>}
+      {loading && <Loader />}
       <ul>
         {reviews &&
           reviews.map(review => (

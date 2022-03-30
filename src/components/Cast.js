@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { CastFilm } from '../helpers/FetchFilms';
 import { useEffect, useState } from 'react';
+import Loader from './Loader';
 import styled from 'styled-components';
 import noPoster from '../images/no-poster.jpg';
 const Tittle = styled.h2`
@@ -36,7 +37,7 @@ const Cast = () => {
 
   return (
     <Wrapper>
-      {loading && <h1>Loading...</h1>}
+      {loading && <Loader />}
       <ul>
         {casts &&
           casts.map(cast => (

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { TrendingFilms } from '../helpers/FetchFilms';
+import Loader from './Loader';
 import noPoster from '../images/no-poster.jpg';
 
 const Gallery = styled.ul`
@@ -82,7 +83,7 @@ const HomePage = () => {
   }, [page]);
   return (
     <>
-      {loading && <h1>Loading...</h1>}
+      {loading && <Loader />}
       <Gallery>
         {films &&
           films.map(film => (

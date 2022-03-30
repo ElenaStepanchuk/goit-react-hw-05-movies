@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { FcLeft, FcClapperboard, FcVoicePresentation } from 'react-icons/fc';
 import noPoster from '../images/no-poster.jpg';
+import Loader from './Loader';
 
 const Wrapper = styled.div`
   display: flex;
@@ -109,7 +110,7 @@ const MovieDetailsPage = () => {
   };
   return (
     <Wrapper>
-      {loading && <h1>Loading...</h1>}
+      {loading && <Loader />}
       {detail && <Tittle>{detail.original_title || detail.name}</Tittle>}
       <SecondTittle>
         Release date:&nbsp;{detail && <Span>{detail.release_date}</Span>}

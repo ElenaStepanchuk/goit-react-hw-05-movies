@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import { SerchFilms } from '../helpers/FetchFilms';
 import noPoster from '../images/no-poster.jpg';
+import Loader from './Loader';
 const Gallery = styled.ul`
   display: grid;
   justify-content: center;
@@ -154,7 +155,7 @@ const MoviesPage = () => {
         ></Input>
         <SerchBtn type="submit">Serch</SerchBtn>
       </Form>
-      {loading && <h1>Loading...</h1>}
+      {loading && <Loader />}
       <Gallery>
         {films.map(film => (
           <GalleryItem key={film.id}>
