@@ -92,26 +92,16 @@ const MoviesPage = () => {
 
   const ChangeQuery = event => {
     setQuery(event.currentTarget.value.toLowerCase());
-    SetSaveQuery(query);
   };
   const handleSubmit = event => {
     event.preventDefault();
+    SetSaveQuery(query);
     if (query === '') {
-      setFilms([]);
       return toast('Введите имя фото!', {
         position: 'top-center',
       });
-    } else if (films.length === 0) {
-      setFilms([]);
-      setQuery('');
-      return toast(
-        `Фильм с именем  ${query} не найден, введите новое имя фильма!`,
-        {
-          position: 'top-center',
-        }
-      );
     }
-    SetSaveQuery(query);
+    setFilms([]);
     setQuery('');
     setPage(1);
   };
@@ -132,7 +122,17 @@ const MoviesPage = () => {
       setLoading(true);
       try {
         const response = await SerchFilms(page, saveQuery);
-        // console.log(response.data.results);
+        console.log(response.data.results);
+
+        if (response.data.results.length === 0) {
+          toast(
+            `Фильм с именем  ${saveQuery} не найден, введите новое имя фильма!`,
+            {
+              position: 'top-center',
+            }
+          );
+          SetSaveQuery('');
+        }
         setFilms(prevFilms => [...prevFilms, ...response.data.results]);
       } catch (error) {
         console.log(error);

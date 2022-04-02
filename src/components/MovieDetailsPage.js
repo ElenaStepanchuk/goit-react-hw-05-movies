@@ -39,6 +39,7 @@ const TextDet = styled.p`
   font-weight: 400;
   font-size: 20px;
   text-transform: none;
+  text-align: justify;
 `;
 const LinkADet = styled.a`
   font-weight: 400;
@@ -69,6 +70,21 @@ const BackBtnDet = styled.button`
 const DetailsLink = styled(Link)`
   display: block;
   margin-left: 20px;
+  background: rgb(0, 255, 255);
+  box-shadow: -1px -1px 9px 6px rgb(0, 255, 255, 0.5);
+  border: solid 1px rgb(0, 255, 255);
+  border-radius: 5px;
+  color: rgb(2, 16, 141);
+  text-align: center;
+  font-style: italic;
+  padding: 15px;
+  font-weight: 900;
+  font-size: 18px;
+  text-transform: uppercase;
+  text-decoration: none;
+`;
+const BacklsLink = styled(Link)`
+  display: block;
   background: rgb(0, 255, 255);
   box-shadow: -1px -1px 9px 6px rgb(0, 255, 255, 0.5);
   border: solid 1px rgb(0, 255, 255);
@@ -148,9 +164,17 @@ const MovieDetailsPage = () => {
           <LinkADet href={`${detail.homepage}`}> Link to homepage</LinkADet>
         )}
       </SecondTittleDet>
-      <BackBtnDet type="button" onClick={handleBackBtn}>
+      {/* <BackBtnDet type="button" onClick={handleBackBtn}>
         <FcLeft /> Go back
-      </BackBtnDet>
+      </BackBtnDet> */}
+      <BacklsLink
+        to={{
+          pathname: `/`,
+          state: { from: 5 },
+        }}
+      >
+        <FcLeft /> Go back
+      </BacklsLink>
       <DetailsLink
         to={{
           pathname: `/movies/${movieId}/cast`,

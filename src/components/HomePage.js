@@ -56,8 +56,10 @@ const HomePage = () => {
   const [films, setFilms] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+
   const location = useLocation();
   console.log(location);
+
   const Scroll = () => {
     window.scrollBy({
       top: 2000,
