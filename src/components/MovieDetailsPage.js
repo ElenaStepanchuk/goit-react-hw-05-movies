@@ -1,4 +1,11 @@
-import { Link, useParams, Outlet, useLocation } from 'react-router-dom';
+import {
+  Link,
+  useParams,
+  Outlet,
+  useLocation,
+  useHistory,
+  useSearchParams,
+} from 'react-router-dom';
 import { nanoid } from 'nanoid';
 import { DetailsFilm } from '../helpers/FetchFilms';
 import { useEffect, useState } from 'react';
@@ -104,10 +111,13 @@ const MovieDetailsPage = () => {
   const [detail, setDetail] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const [searchParams, setSearchParams] = useSearchParams();
+  console.log(searchParams);
+
   const location = useLocation();
   console.log(location);
-
-  // const history = useHistory;
+  // const history = useHistory();
+  // console.log(history);
 
   useEffect(() => {
     const GetDetails = async () => {
