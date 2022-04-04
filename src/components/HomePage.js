@@ -58,7 +58,7 @@ const HomePage = () => {
   const [loading, setLoading] = useState(false);
 
   const location = useLocation();
-  console.log(location);
+  // console.log(location);
 
   const Scroll = () => {
     window.scrollBy({

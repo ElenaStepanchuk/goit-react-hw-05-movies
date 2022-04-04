@@ -3,7 +3,6 @@ import {
   useParams,
   Outlet,
   useLocation,
-  useHistory,
   useSearchParams,
 } from 'react-router-dom';
 import { nanoid } from 'nanoid';
@@ -56,21 +55,21 @@ const LinkADet = styled.a`
   margin-bottom: 20px;
   text-transform: none;
 `;
-const BackBtnDet = styled.button`
-  display: block;
-  background: rgb(0, 255, 255);
-  box-shadow: -1px -1px 9px 6px rgb(0, 255, 255, 0.5);
-  border: solid 1px rgb(0, 255, 255);
-  border-radius: 5px;
-  color: rgb(2, 16, 141);
-  text-align: center;
-  font-style: italic;
-  padding: 15px;
-  font-weight: 900;
-  font-size: 18px;
-  text-transform: uppercase;
-  text-decoration: none;
-`;
+// const BackBtnDet = styled.button`
+//   display: block;
+//   background: rgb(0, 255, 255);
+//   box-shadow: -1px -1px 9px 6px rgb(0, 255, 255, 0.5);
+//   border: solid 1px rgb(0, 255, 255);
+//   border-radius: 5px;
+//   color: rgb(2, 16, 141);
+//   text-align: center;
+//   font-style: italic;
+//   padding: 15px;
+//   font-weight: 900;
+//   font-size: 18px;
+//   text-transform: uppercase;
+//   text-decoration: none;
+// `;
 // const LinkBtn = styled(Link)`
 //   text-decoration: none;
 // `;
@@ -112,19 +111,16 @@ const MovieDetailsPage = () => {
   const [loading, setLoading] = useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log(searchParams);
-
   const location = useLocation();
   console.log(location);
-  // const history = useHistory();
-  // console.log(history);
 
   useEffect(() => {
+    // const query = searchParams.get('query');
+    // console.log(query);
     const GetDetails = async () => {
       setLoading(true);
       try {
         const response = await DetailsFilm(movieId);
-        // console.log(response.data);
         setDetail(response.data);
       } catch (error) {
         console.log(error);
@@ -133,16 +129,12 @@ const MovieDetailsPage = () => {
       }
     };
     GetDetails();
-  }, [movieId]);
-  const handleBackBtn = () => {
-    // setDetail(null);
-    if (location && location.state && location.state.from) {
-      // history.push(location.state.from);
-      return;
-    } // history.push('/');
-
-    //history.push(location?.state?.from ?? '/');
-  };
+  }, [movieId, searchParams]);
+  // const handleBackBtn = () => {
+  //   if (location && location.state && location.state.from) {
+  //     return;
+  //   }
+  // };
   return (
     <WrapperDet>
       {loading && <Loader />}
@@ -177,29 +169,14 @@ const MovieDetailsPage = () => {
       {/* <BackBtnDet type="button" onClick={handleBackBtn}>
         <FcLeft /> Go back
       </BackBtnDet> */}
-      <BacklsLink
-        to={{
-          pathname: `/`,
-          state: { from: 5 },
-        }}
-      >
+      <BacklsLink to={location?.state?.from || '/'}>
         <FcLeft /> Go back
       </BacklsLink>
-      <DetailsLink
-        to={{
-          pathname: `/movies/${movieId}/cast`,
-          state: 5,
-        }}
-      >
+      <DetailsLink to={`/movies/${movieId}/cast`} state={{ from: location }}>
         <FcClapperboard />
         Cast
       </DetailsLink>
-      <DetailsLink
-        to={{
-          pathname: `/movies/${movieId}/reviews`,
-          state: { from: location },
-        }}
-      >
+      <DetailsLink to={`/movies/${movieId}/reviews`} state={{ from: location }}>
         <FcVoicePresentation />
         Reviews
       </DetailsLink>

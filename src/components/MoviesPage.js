@@ -84,17 +84,16 @@ const MoviesPage = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  // const [searchParams, setSearchParams] = useSearchParams();
-  // const location = useLocation();
-  // console.log(location.pathname);
-  // console.log(location.pathname.slice(1));
-  // console.log(searchParams);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
+  console.log(location);
 
   const ChangeQuery = event => {
     setQuery(event.currentTarget.value.toLowerCase());
   };
   const handleSubmit = event => {
     event.preventDefault();
+    setSearchParams({ query: query });
     SetSaveQuery(query);
     if (query === '') {
       return toast('Введите имя фото!', {
@@ -117,12 +116,14 @@ const MoviesPage = () => {
     setPage(prevPage => prevPage + 1);
   };
   useEffect(() => {
+    const query = searchParams.get('query');
+    console.log(query);
     if (saveQuery === '') return;
     const SerchFilm = async () => {
       setLoading(true);
       try {
         const response = await SerchFilms(page, saveQuery);
-        console.log(response.data.results);
+        // console.log(response.data.results);
 
         if (response.data.results.length === 0) {
           toast(
@@ -141,7 +142,8 @@ const MoviesPage = () => {
       }
     };
     SerchFilm();
-  }, [page, saveQuery]);
+  }, [page, saveQuery, searchParams]);
+
   return (
     <>
       <Form onSubmit={handleSubmit}>
@@ -157,27 +159,31 @@ const MoviesPage = () => {
       </Form>
       {loading && <Loader />}
       <Gallery>
-        {films.map(film => (
-          <GalleryItem key={film.id}>
-            <GalleryItemLink to={`/movies/${film.id}`}>
-              {film.poster_path ? (
-                <GalleryItemImg
-                  src={`https://image.tmdb.org/t/p/w300${film.poster_path}`}
-                  alt={film.original_title}
-                />
-              ) : (
-                <GalleryItemImg
-                  src={noPoster}
-                  alt={film.original_title}
-                  width="300px"
-                />
-              )}
-              <GalleryItemTittle>
-                {film.original_title || film.name}
-              </GalleryItemTittle>
-            </GalleryItemLink>
-          </GalleryItem>
-        ))}
+        {films.length > 0 &&
+          films.map(film => (
+            <GalleryItem key={film.id}>
+              <GalleryItemLink
+                to={`/movies/${film.id}`}
+                state={{ from: location }}
+              >
+                {film.poster_path ? (
+                  <GalleryItemImg
+                    src={`https://image.tmdb.org/t/p/w300${film.poster_path}`}
+                    alt={film.original_title}
+                  />
+                ) : (
+                  <GalleryItemImg
+                    src={noPoster}
+                    alt={film.original_title}
+                    width="300px"
+                  />
+                )}
+                <GalleryItemTittle>
+                  {film.original_title || film.name}
+                </GalleryItemTittle>
+              </GalleryItemLink>
+            </GalleryItem>
+          ))}
       </Gallery>
       {films.length > 0 && (
         <GalleryItemBtn
