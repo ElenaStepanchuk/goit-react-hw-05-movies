@@ -79,23 +79,20 @@ const SerchBtn = styled.button`
 `;
 const MoviesPage = () => {
   const [query, setQuery] = useState('');
-  const [saveQuery, SetSaveQuery] = useState('');
   const [films, setFilms] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
-  console.log(location);
-
   const ChangeQuery = event => {
     setQuery(event.currentTarget.value.toLowerCase());
   };
   const handleSubmit = event => {
     event.preventDefault();
     setSearchParams({ query });
-    SetSaveQuery(query);
     if (query === '') {
+      setSearchParams('');
+      setFilms([]);
       return toast('Введите имя фото!', {
         position: 'top-center',
       });
@@ -117,22 +114,20 @@ const MoviesPage = () => {
   };
   useEffect(() => {
     const query = searchParams.get('query');
-    console.log(query);
     if (location.search === '') return;
     const SerchFilm = async () => {
       setLoading(true);
       try {
         const response = await SerchFilms(page, query);
-        // console.log(response.data.results);
-
         if (response.data.results.length === 0) {
+          setSearchParams('');
+          setFilms([]);
           toast(
-            `Фильм с именем  ${saveQuery} не найден, введите новое имя фильма!`,
+            `Фильм с именем  ${query} не найден, введите новое имя фильма!`,
             {
               position: 'top-center',
             }
           );
-          SetSaveQuery('');
         }
         setFilms(prevFilms => [...prevFilms, ...response.data.results]);
       } catch (error) {
@@ -142,8 +137,7 @@ const MoviesPage = () => {
       }
     };
     SerchFilm();
-  }, [page, saveQuery, searchParams, location.search]);
-
+  }, [page, searchParams, setSearchParams, location.search]);
   return (
     <>
       <Form onSubmit={handleSubmit}>

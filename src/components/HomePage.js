@@ -4,13 +4,21 @@ import styled from 'styled-components';
 import { TrendingFilms } from '../helpers/FetchFilms';
 import Loader from './Loader';
 import noPoster from '../images/no-poster.jpg';
-
+const Tittle = styled.h1`
+  padding: 0;
+  margin-top: 20px;
+  font-size: 35px;
+  color: white;
+  text-align: center;
+  font-weight: 800;
+  text-transform: uppercase;
+`;
 const Gallery = styled.ul`
   display: grid;
   justify-content: center;
   grid-template-columns: 340px 340px 340px 340px;
-  padding: 0;
-  margin: 20px auto;
+  margin-top: -20px;
+  margin-left: -40px;
 `;
 const GalleryItem = styled.li`
   list-style: none;
@@ -56,10 +64,7 @@ const HomePage = () => {
   const [films, setFilms] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-
   const location = useLocation();
-  // console.log(location);
-
   const Scroll = () => {
     window.scrollBy({
       top: 2000,
@@ -88,6 +93,7 @@ const HomePage = () => {
   return (
     <>
       {loading && <Loader />}
+      <Tittle>Trending films today</Tittle>
       <Gallery>
         {films &&
           films.map(film => (

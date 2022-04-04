@@ -1,4 +1,4 @@
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { CastFilm } from '../helpers/FetchFilms';
 import { useEffect, useState } from 'react';
 import Loader from './Loader';
@@ -16,14 +16,16 @@ const Wrapper = styled.div`
   justify-content: center;
   padding: 0;
 `;
+const NoCast = styled.p`
+  font-weight: 400;
+  font-size: 20px;
+  text-transform: none;
+  text-align: justify;
+`;
 const Cast = () => {
   const { movieId } = useParams();
   const [casts, setCasts] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  const location = useLocation();
-  console.log(location);
-
   useEffect(() => {
     const CastInfo = async () => {
       setLoading(true);
@@ -38,12 +40,11 @@ const Cast = () => {
     };
     CastInfo();
   }, [movieId]);
-
   return (
     <Wrapper>
       {loading && <Loader />}
       <ul>
-        {casts &&
+        {casts.length > 0 ? (
           casts.map(cast => (
             <li key={cast.cast_id}>
               <Tittle>{cast.name}</Tittle>
@@ -56,7 +57,12 @@ const Cast = () => {
                 <img src={noPoster} alt={cast.original_name} width="300px" />
               )}
             </li>
-          ))}
+          ))
+        ) : (
+          <li>
+            <NoCast>We don`t have any cast for this movie.</NoCast>
+          </li>
+        )}
       </ul>
     </Wrapper>
   );

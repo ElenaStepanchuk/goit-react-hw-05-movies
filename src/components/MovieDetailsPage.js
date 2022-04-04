@@ -1,10 +1,4 @@
-import {
-  Link,
-  useParams,
-  Outlet,
-  useLocation,
-  useSearchParams,
-} from 'react-router-dom';
+import { Link, useParams, Outlet, useLocation } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 import { DetailsFilm } from '../helpers/FetchFilms';
 import { useEffect, useState } from 'react';
@@ -34,7 +28,6 @@ const SecondTittleDet = styled.h3`
   text-transform: uppercase;
   width: 460px;
   text-align: center;
-  /* margin: 0 auto; */
 `;
 const SpanDet = styled.span`
   font-weight: 400;
@@ -55,24 +48,6 @@ const LinkADet = styled.a`
   margin-bottom: 20px;
   text-transform: none;
 `;
-// const BackBtnDet = styled.button`
-//   display: block;
-//   background: rgb(0, 255, 255);
-//   box-shadow: -1px -1px 9px 6px rgb(0, 255, 255, 0.5);
-//   border: solid 1px rgb(0, 255, 255);
-//   border-radius: 5px;
-//   color: rgb(2, 16, 141);
-//   text-align: center;
-//   font-style: italic;
-//   padding: 15px;
-//   font-weight: 900;
-//   font-size: 18px;
-//   text-transform: uppercase;
-//   text-decoration: none;
-// `;
-// const LinkBtn = styled(Link)`
-//   text-decoration: none;
-// `;
 const DetailsLink = styled(Link)`
   display: block;
   margin-left: 20px;
@@ -104,19 +79,12 @@ const BacklsLink = styled(Link)`
   text-transform: uppercase;
   text-decoration: none;
 `;
-
 const MovieDetailsPage = () => {
   const { movieId } = useParams();
   const [detail, setDetail] = useState(null);
   const [loading, setLoading] = useState(false);
-
-  const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
-  console.log(location);
-
   useEffect(() => {
-    // const query = searchParams.get('query');
-    // console.log(query);
     const GetDetails = async () => {
       setLoading(true);
       try {
@@ -129,12 +97,7 @@ const MovieDetailsPage = () => {
       }
     };
     GetDetails();
-  }, [movieId, searchParams]);
-  // const handleBackBtn = () => {
-  //   if (location && location.state && location.state.from) {
-  //     return;
-  //   }
-  // };
+  }, [movieId]);
   return (
     <WrapperDet>
       {loading && <Loader />}
@@ -166,9 +129,6 @@ const MovieDetailsPage = () => {
           <LinkADet href={`${detail.homepage}`}> Link to homepage</LinkADet>
         )}
       </SecondTittleDet>
-      {/* <BackBtnDet type="button" onClick={handleBackBtn}>
-        <FcLeft /> Go back
-      </BackBtnDet> */}
       <BacklsLink to={location?.state?.from || '/'}>
         <FcLeft /> Go back
       </BacklsLink>

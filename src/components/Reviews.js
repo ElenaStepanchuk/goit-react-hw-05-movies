@@ -3,7 +3,6 @@ import { ReviewsFilm } from '../helpers/FetchFilms';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Loader from './Loader';
-
 const TittleRev = styled.h2`
   text-align: left;
   font-weight: 800;
@@ -14,7 +13,6 @@ const DateRev = styled.p`
   font-weight: 400;
   font-size: 18px;
   text-transform: none;
-  /* text-align: right; */
 `;
 const TextRev = styled.p`
   font-weight: 400;
@@ -22,12 +20,10 @@ const TextRev = styled.p`
   text-transform: none;
   text-align: justify;
 `;
-
 const Reviews = () => {
   const { movieId } = useParams();
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
-
   useEffect(() => {
     const ReviewsInfo = async () => {
       setLoading(true);
@@ -46,7 +42,7 @@ const Reviews = () => {
     <div>
       {loading && <Loader />}
       <ul>
-        {reviews &&
+        {reviews.length > 0 ? (
           reviews.map(review => {
             return (
               <li key={review.id}>
@@ -60,7 +56,12 @@ const Reviews = () => {
                 <TextRev>{review.content}</TextRev>
               </li>
             );
-          })}
+          })
+        ) : (
+          <li>
+            <TextRev>We don`t have any reviews for this movie.</TextRev>
+          </li>
+        )}
       </ul>
     </div>
   );
