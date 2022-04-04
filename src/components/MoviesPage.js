@@ -93,7 +93,7 @@ const MoviesPage = () => {
   };
   const handleSubmit = event => {
     event.preventDefault();
-    setSearchParams({ query: query });
+    setSearchParams({ query });
     SetSaveQuery(query);
     if (query === '') {
       return toast('Введите имя фото!', {
@@ -118,11 +118,11 @@ const MoviesPage = () => {
   useEffect(() => {
     const query = searchParams.get('query');
     console.log(query);
-    if (saveQuery === '') return;
+    if (location.search === '') return;
     const SerchFilm = async () => {
       setLoading(true);
       try {
-        const response = await SerchFilms(page, saveQuery);
+        const response = await SerchFilms(page, query);
         // console.log(response.data.results);
 
         if (response.data.results.length === 0) {
@@ -142,7 +142,7 @@ const MoviesPage = () => {
       }
     };
     SerchFilm();
-  }, [page, saveQuery, searchParams]);
+  }, [page, saveQuery, searchParams, location.search]);
 
   return (
     <>
