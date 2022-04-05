@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { FcLeft, FcClapperboard, FcVoicePresentation } from 'react-icons/fc';
 import noPoster from '../images/no-poster.jpg';
 import Loader from './Loader';
-
 const WrapperDet = styled.div`
   display: flex;
   flex-wrap: wrap;

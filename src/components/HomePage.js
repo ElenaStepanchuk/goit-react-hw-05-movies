@@ -4,6 +4,10 @@ import styled from 'styled-components';
 import { TrendingFilms } from '../helpers/FetchFilms';
 import Loader from './Loader';
 import noPoster from '../images/no-poster.jpg';
+import Scrollers from '../helpers/Scroll';
+import BtnMoreFilms from './BtnMoreFilms';
+// import GalleryListTrendFilms from './GalleryListTrendFilms';
+// import GalleryItemTrending from './GalleryImgTrending';
 const Tittle = styled.h1`
   padding: 0;
   margin-top: 20px;
@@ -42,21 +46,21 @@ const GalleryItemImg = styled.img`
   display: block;
   box-shadow: 10px 8px 5px rgb(0, 255, 255, 0.5);
 `;
-const GalleryItemBtn = styled.button`
-  display: block;
-  margin: 20px auto;
-  background: rgb(0, 255, 255);
-  box-shadow: -1px -1px 9px 6px rgb(0, 255, 255, 0.5);
-  border: solid 1px rgb(0, 255, 255);
-  border-radius: 5px;
-  color: rgb(2, 16, 141);
-  text-align: center;
-  font-style: italic;
-  padding: 15px;
-  font-weight: 900;
-  font-size: 18px;
-  text-transform: uppercase;
-`;
+// const GalleryItemBtn = styled.button`
+//   display: block;
+//   margin: 20px auto;
+//   background: rgb(0, 255, 255);
+//   box-shadow: -1px -1px 9px 6px rgb(0, 255, 255, 0.5);
+//   border: solid 1px rgb(0, 255, 255);
+//   border-radius: 5px;
+//   color: rgb(2, 16, 141);
+//   text-align: center;
+//   font-style: italic;
+//   padding: 15px;
+//   font-weight: 900;
+//   font-size: 18px;
+//   text-transform: uppercase;
+// `;
 const GalleryItemLink = styled(Link)`
   text-decoration: none;
 `;
@@ -65,16 +69,10 @@ const HomePage = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const location = useLocation();
-  const Scroll = () => {
-    window.scrollBy({
-      top: 2000,
-      behavior: 'smooth',
-    });
-  };
   const handleChangePage = () => {
     setLoading(true);
     setPage(prevPage => prevPage + 1);
-    Scroll();
+    Scrollers();
   };
   useEffect(() => {
     const Films = async () => {
@@ -99,10 +97,8 @@ const HomePage = () => {
           films.map(film => (
             <GalleryItem key={film.id}>
               <GalleryItemLink
-                to={{
-                  pathname: `/movies/${film.id}`,
-                  state: { from: location },
-                }}
+                to={`/movies/${film.id}`}
+                state={{ from: location }}
               >
                 {film.poster_path ? (
                   <GalleryItemImg
@@ -120,13 +116,7 @@ const HomePage = () => {
           ))}
       </Gallery>
       {films.length > 0 && (
-        <GalleryItemBtn
-          type="button"
-          page={page}
-          onClick={() => handleChangePage(page)}
-        >
-          More films
-        </GalleryItemBtn>
+        <BtnMoreFilms page={page} onClick={() => handleChangePage(page)} />
       )}
     </>
   );

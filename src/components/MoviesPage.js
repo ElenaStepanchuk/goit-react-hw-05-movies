@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { SerchFilms } from '../helpers/FetchFilms';
 import noPoster from '../images/no-poster.jpg';
 import Loader from './Loader';
+import Scrollers from '../helpers/Scroll';
 const Gallery = styled.ul`
   display: grid;
   justify-content: center;
@@ -101,14 +102,8 @@ const MoviesPage = () => {
     setQuery('');
     setPage(1);
   };
-  const Scroll = () => {
-    window.scrollBy({
-      top: 2000,
-      behavior: 'smooth',
-    });
-  };
   const handleChangePage = () => {
-    Scroll();
+    Scrollers();
     setLoading(true);
     setPage(prevPage => prevPage + 1);
   };
@@ -181,6 +176,7 @@ const MoviesPage = () => {
       </Gallery>
       {films.length > 0 && (
         <GalleryItemBtn
+          name="myScrollToElement"
           type="button"
           page={page}
           onClick={() => handleChangePage(page)}
