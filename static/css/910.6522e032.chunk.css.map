@@ -1,1 +1,0 @@
-{"version":3,"file":"static/css/910.6522e032.chunk.css","mappings":"AAAA,yBAGE,sBAAiB,CAFjB,WAGF","sources":["components/Loader.module.css"],"sourcesContent":[".LoaderBox {\n  width: 200px;\n  margin: auto;\n  margin-top: 200px;\n}\n"],"names":[],"sourceRoot":""}
