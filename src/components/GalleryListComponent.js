@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import GalleryItemTrending from './GalleryItemTrending';
+import GalleryItemComponent from './GalleryItemComponent';
 const Gallery = styled.ul`
   display: grid;
   justify-content: center;
@@ -7,14 +7,14 @@ const Gallery = styled.ul`
   margin-top: -20px;
   margin-left: -40px;
 `;
-const GalleryListTrending = ({ films, location }) => {
+const GalleryListComponent = ({ films, location }) => {
   return (
     <Gallery>
       {films &&
         films.map(film => (
-          <GalleryItemTrending key={film.id} film={film} location={location} />
+          <GalleryItemComponent key={film.id} film={film} location={location} />
         ))}
     </Gallery>
   );
 };
-export default GalleryListTrending;
+export default GalleryListComponent;

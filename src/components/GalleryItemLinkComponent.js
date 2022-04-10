@@ -21,7 +21,7 @@ const GalleryItemLink = styled(Link)`
 `;
 const GalleryItemLinkComponent = ({ film, location }) => {
   return (
-    <GalleryItemLink to={`/movies/${film.id}`} state={{ from: { location } }}>
+    <GalleryItemLink to={`/movies/${film.id}`} state={{ from: location }}>
       {film.poster_path ? (
         <GalleryImg film={film} />
       ) : (
