@@ -1,12 +1,13 @@
 import { useSearchParams, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 import { SerchFilms } from '../helpers/FetchFilms';
 import Loader from './Loader';
 import Scrollers from '../helpers/Scroll';
 import BtnMoreFilms from './BtnMoreFilms';
 import FormMoviePage from './FormMoviePage';
-import GalleryListTrending from './GalleryListComponent';
+import GalleryListComponent from './GalleryListComponent';
 const MoviesPage = () => {
   const [query, setQuery] = useState('');
   const [films, setFilms] = useState([]);
@@ -70,7 +71,7 @@ const MoviesPage = () => {
         query={query}
       />
       {loading && <Loader />}
-      <GalleryListTrending films={films} location={location} />
+      <GalleryListComponent films={films} location={location} />
       {films.length > 0 && (
         <BtnMoreFilms page={page} onClick={() => handleChangePage(page)} />
       )}
@@ -78,3 +79,12 @@ const MoviesPage = () => {
   );
 };
 export default MoviesPage;
+MoviesPage.protoTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  ChangeQuery: PropTypes.func.isRequired,
+  query: PropTypes.string.isRequired,
+  films: PropTypes.array.isRequired,
+  location: PropTypes.string.isRequired,
+  page: PropTypes.number.isRequired,
+  handleChangePage: PropTypes.func.isRequired,
+};

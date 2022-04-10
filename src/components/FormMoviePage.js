@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 const Form = styled.form`
   display: flex;
   justify-content: center;
@@ -40,3 +41,8 @@ const FormMoviePage = ({ handleSubmit, ChangeQuery, query }) => {
   );
 };
 export default FormMoviePage;
+FormMoviePage.protoTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  ChangeQuery: PropTypes.func.isRequired,
+  query: PropTypes.string.isRequired,
+};

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 const GalleryItemBtn = styled.button`
   display: block;
   margin: 20px auto;
@@ -27,3 +28,7 @@ const BtnMoreFilms = ({ page, onClick }) => {
   );
 };
 export default BtnMoreFilms;
+BtnMoreFilms.protoTypes = {
+  page: PropTypes.number.isRequired,
+  onClick: PropTypes.func.isRequired,
+};

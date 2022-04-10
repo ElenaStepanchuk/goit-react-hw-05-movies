@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import GalleryItemComponent from './GalleryItemComponent';
 const Gallery = styled.ul`
   display: grid;
@@ -18,3 +19,12 @@ const GalleryListComponent = ({ films, location }) => {
   );
 };
 export default GalleryListComponent;
+GalleryListComponent.protoTypes = {
+  films: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      film: PropTypes.string.isRequired,
+    })
+  ),
+  location: PropTypes.string.isRequired,
+};

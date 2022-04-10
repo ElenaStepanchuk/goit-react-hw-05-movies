@@ -2,6 +2,7 @@ import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { TrendingFilms } from '../helpers/FetchFilms';
+import PropTypes from 'prop-types';
 import Loader from './Loader';
 import Scrollers from '../helpers/Scroll';
 import BtnMoreFilms from './BtnMoreFilms';
@@ -51,3 +52,9 @@ const HomePage = () => {
   );
 };
 export default HomePage;
+HomePage.protoTypes = {
+  films: PropTypes.array.isRequired,
+  location: PropTypes.string.isRequired,
+  page: PropTypes.number.isRequired,
+  handleChangePage: PropTypes.func.isRequired,
+};

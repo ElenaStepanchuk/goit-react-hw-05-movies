@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import GalleryItemLinkComponent from './GalleryItemLinkComponent';
 const GalleryItem = styled.li`
   list-style: none;
@@ -12,3 +13,9 @@ const GalleryItemComponent = ({ film, location }) => {
   );
 };
 export default GalleryItemComponent;
+GalleryItemComponent.protoTypes = {
+  film: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+  }),
+  location: PropTypes.string.isRequired,
+};

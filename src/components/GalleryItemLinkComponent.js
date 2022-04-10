@@ -2,6 +2,7 @@ import GalleryImg from './GalleryImg';
 import noPoster from '../images/no-poster.jpg';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 const GalleryItemTittle = styled.h2`
   background: rgb(0, 255, 255, 0.8);
   padding: 15px 4px;
@@ -32,3 +33,12 @@ const GalleryItemLinkComponent = ({ film, location }) => {
   );
 };
 export default GalleryItemLinkComponent;
+GalleryItemLinkComponent.protoTypes = {
+  film: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    poster_path: PropTypes.string.isRequired,
+    original_title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  }),
+  location: PropTypes.string.isRequired,
+};
