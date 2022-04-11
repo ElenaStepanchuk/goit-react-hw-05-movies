@@ -128,14 +128,20 @@ const MovieDetailsPage = () => {
           <LinkADet href={`${detail.homepage}`}> Link to homepage</LinkADet>
         )}
       </SecondTittleDet>
-      <BacklsLink to={location?.state?.from || '/'}>
+      <BacklsLink to={location?.state?.from ?? '/'}>
         <FcLeft /> Go back
       </BacklsLink>
-      <DetailsLink to={`/movies/${movieId}/cast`} state={{ from: location }}>
+      <DetailsLink
+        to={`/movies/${movieId}/cast`}
+        state={{ from: { ...location.state.from } }}
+      >
         <FcClapperboard />
         Cast
       </DetailsLink>
-      <DetailsLink to={`/movies/${movieId}/reviews`} state={{ from: location }}>
+      <DetailsLink
+        to={`/movies/${movieId}/reviews`}
+        state={{ from: { ...location.state.from } }}
+      >
         <FcVoicePresentation />
         Reviews
       </DetailsLink>
